@@ -212,6 +212,19 @@
       </div>
 
       <div class="card">
+        <h2>ค่าความขุ่นปัจจุบัน</h2>
+        <p class="desc">ค่า ADC ดิบจากเซนเซอร์วัดความขุ่น เทียบกับค่าที่ตั้งไว้</p>
+        <div class="servo-visual">
+          <div class="servo-state">
+            <div class="label">ค่าความขุ่น</div>
+            <div class="value" id="homeTurbidityValue">-- ADC</div>
+          </div>
+          <div class="status-pill clear" id="homeTurbidityStatusPill">รอข้อมูล</div>
+        </div>
+        <div class="threshold-current">ค่าที่ตั้งไว้: <b id="homeTurbidityThreshold">--</b> ADC</div>
+      </div>
+
+      <div class="card">
         <h2>ค่าความเป็นกรด-ด่าง (pH)</h2>
         <p class="desc">ค่า pH ปัจจุบันจากเซนเซอร์ เทียบกับช่วงที่ตั้งไว้</p>
         <div class="servo-visual">
@@ -608,14 +621,20 @@
   refTurbidity.on('value', snap => {
     const val = snap.val();
     document.getElementById('turbidityValue').textContent = (val === null) ? '--' : val;
+    document.getElementById('homeTurbidityValue').textContent = (val === null) ? '-- ADC' : val + ' ADC';
     const pill = document.getElementById('statusPill');
+    const homePill = document.getElementById('homeTurbidityStatusPill');
     if(val !== null && latestThreshold !== null){
       if(val < latestThreshold){
         pill.textContent = 'น้ำขุ่น — ต่ำกว่าค่าที่ตั้งไว้';
         pill.className = 'status-pill murky';
+        homePill.textContent = 'น้ำขุ่น';
+        homePill.className = 'status-pill murky';
       } else {
         pill.textContent = 'น้ำใส — อยู่ในเกณฑ์ปกติ';
         pill.className = 'status-pill clear';
+        homePill.textContent = 'น้ำใส — ปกติ';
+        homePill.className = 'status-pill clear';
       }
     }
     setWaterVisual(val ?? 0, latestThreshold);
@@ -633,6 +652,7 @@
     const t = snap.val();
     latestThreshold = t;
     document.getElementById('currentThreshold').textContent = (t === null) ? '--' : t;
+    document.getElementById('homeTurbidityThreshold').textContent = (t === null) ? '--' : t;
     document.getElementById('thresholdInput').placeholder = (t === null) ? 'เช่น 200' : t;
     if(lastHistoryPoints.length) drawHistoryChart(lastHistoryPoints, latestThreshold);
   });
