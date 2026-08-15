@@ -2,127 +2,205 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART FARM NS-WIT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SMART FARM NS-WIT 🐸</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%B8%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0B2E33;
-    --panel: #123B42;
-    --panel-2: #16454C;
-    --line: rgba(234,243,241,0.09);
-    --clear: #6FE7DD;
-    --murky: #B98A54;
-    --alert: #E8A33D;
-    --danger: #E2694B;
-    --text: #EAF3F1;
-    --text-dim: #8FB4B0;
+    --bg-0: #050f13;
+    --bg-1: #0a2024;
+    --glass: rgba(255,255,255,0.045);
+    --glass-hi: rgba(255,255,255,0.075);
+    --line: rgba(234,243,241,0.10);
+    --line-hi: rgba(234,243,241,0.18);
+
+    --mint: #7CFFD4;
+    --mint-deep: #22C7A9;
+    --coral: #FF7A66;
+    --coral-deep: #E2503C;
+    --amber: #FFC65C;
+    --violet: #B48CFF;
+
+    --clear: var(--mint);
+    --murky: var(--amber);
+    --alert: var(--amber);
+    --danger: var(--coral);
+
+    --text: #F4FFFC;
+    --text-dim: #8FB8B2;
+    --text-faint: #5C8580;
+
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+
+    --r-lg: 22px;
+    --r-md: 16px;
+    --r-sm: 12px;
   }
+
   *{box-sizing:border-box; margin:0; padding:0;}
+  ::selection{background:var(--mint); color:#04211d;}
+
+  html{scroll-behavior:smooth;}
+
   body{
     background:
-      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(111,231,221,0.08), transparent),
-      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(185,138,84,0.06), transparent),
-      var(--bg);
+      radial-gradient(ellipse 60vw 40vh at 8% -8%, rgba(124,255,212,0.16), transparent 60%),
+      radial-gradient(ellipse 55vw 45vh at 105% 8%, rgba(180,140,255,0.13), transparent 60%),
+      radial-gradient(ellipse 60vw 40vh at 50% 115%, rgba(255,122,102,0.09), transparent 60%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-0) 40%);
+    background-attachment:fixed;
     color:var(--text);
     font-family:var(--font-body);
     min-height:100vh;
-    padding:24px 20px 80px;
+    padding:22px 18px 108px;
+    position:relative;
+    overflow-x:hidden;
   }
-  .wrap{max-width:980px; margin:0 auto;}
 
-  header{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap;}
-  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em; color:var(--clear); text-transform:uppercase;}
-  h1{font-family:var(--font-display); font-weight:700; font-size:26px; margin-top:6px; letter-spacing:-0.01em;}
-  .conn{display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); padding:8px 14px; border:1px solid var(--line); border-radius:100px; background:rgba(255,255,255,0.02);}
-  .dot{width:8px; height:8px; border-radius:50%; background:var(--text-dim); transition:background .3s;}
-  .dot.on{background:var(--clear); box-shadow:0 0 10px var(--clear);}
-  .dot.off{background:var(--danger);}
+  /* ambient floating blobs */
+  .blob{position:fixed; border-radius:50%; filter:blur(70px); z-index:0; pointer-events:none; opacity:0.55;}
+  .blob-a{width:340px; height:340px; top:-120px; left:-100px; background:radial-gradient(circle, rgba(124,255,212,0.35), transparent 70%); animation:float-a 22s ease-in-out infinite;}
+  .blob-b{width:300px; height:300px; top:20%; right:-140px; background:radial-gradient(circle, rgba(180,140,255,0.3), transparent 70%); animation:float-b 26s ease-in-out infinite;}
+  .blob-c{width:260px; height:260px; bottom:-100px; left:30%; background:radial-gradient(circle, rgba(255,122,102,0.22), transparent 70%); animation:float-c 30s ease-in-out infinite;}
+  @keyframes float-a{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(30px,40px);} }
+  @keyframes float-b{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(-25px,35px);} }
+  @keyframes float-c{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(20px,-30px);} }
+  @media (prefers-reduced-motion: reduce){
+    .blob-a,.blob-b,.blob-c{animation:none;}
+    html{scroll-behavior:auto;}
+  }
 
+  .wrap{max-width:980px; margin:0 auto; position:relative; z-index:1;}
+
+  /* ---------- header ---------- */
+  header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-mark{
+    width:44px; height:44px; border-radius:14px; flex:0 0 auto;
+    background:linear-gradient(140deg, var(--mint), var(--violet));
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+    box-shadow:0 6px 22px rgba(124,255,212,0.25);
+  }
+  .eyebrow{font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--mint); text-transform:uppercase; opacity:0.9;}
+  h1{
+    font-family:var(--font-display); font-weight:800; font-size:24px; margin-top:2px; letter-spacing:-0.02em;
+    background:linear-gradient(90deg, var(--text) 30%, var(--mint) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .conn{
+    display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11.5px; color:var(--text-dim);
+    padding:9px 14px; border:1px solid var(--line); border-radius:100px; background:var(--glass);
+    backdrop-filter:blur(12px);
+  }
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--text-faint); transition:background .3s;}
+  .dot.on{background:var(--mint); box-shadow:0 0 12px var(--mint); animation:pulse-dot 1.8s ease-in-out infinite;}
+  .dot.off{background:var(--coral); box-shadow:0 0 10px var(--coral);}
+  @keyframes pulse-dot{ 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+
+  /* ---------- top nav (desktop) ---------- */
   .navbar{
-    display:flex; gap:8px; overflow-x:auto; margin-bottom:22px; padding-bottom:4px;
+    display:flex; gap:8px; overflow-x:auto; margin-bottom:20px; padding-bottom:4px;
     scrollbar-width:thin;
   }
   .navbar::-webkit-scrollbar{height:4px;}
   .navbar::-webkit-scrollbar-thumb{background:var(--line); border-radius:10px;}
   .nav-btn{
     flex:0 0 auto; font-family:var(--font-body); font-weight:600; font-size:13px;
-    padding:10px 18px; border-radius:100px; border:1px solid var(--line);
-    background:var(--panel); color:var(--text-dim); cursor:pointer; white-space:nowrap;
-    transition:all .15s;
+    padding:11px 18px; border-radius:100px; border:1px solid var(--line);
+    background:var(--glass); color:var(--text-dim); cursor:pointer; white-space:nowrap;
+    transition:all .18s; backdrop-filter:blur(10px); display:flex; align-items:center; gap:7px;
   }
-  .nav-btn:hover{color:var(--text);}
-  .nav-btn.active{background:var(--clear); color:#062225; border-color:var(--clear);}
+  .nav-btn:hover{color:var(--text); border-color:var(--line-hi);}
+  .nav-btn.active{
+    background:linear-gradient(120deg, var(--mint), var(--mint-deep));
+    color:#04211d; border-color:transparent; font-weight:700;
+    box-shadow:0 6px 18px rgba(124,255,212,0.28);
+  }
 
   .page{display:none;}
-  .page.active{display:block; animation:fadeIn .25s ease;}
-  @keyframes fadeIn{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+  .page.active{display:block; animation:fadeIn .3s ease;}
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  .hero{
-    display:grid;
-    grid-template-columns:1.1fr 1fr;
-    gap:0;
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:20px;
-    overflow:hidden;
-    margin-bottom:20px;
+  /* ---------- vibe hero (home only) ---------- */
+  .vibe-card{
+    position:relative; overflow:hidden;
+    background:linear-gradient(160deg, rgba(124,255,212,0.10), rgba(180,140,255,0.06) 60%, var(--glass));
+    border:1px solid var(--line-hi); border-radius:var(--r-lg);
+    padding:28px 26px; margin-bottom:20px;
   }
-  @media (max-width: 720px){ .hero{grid-template-columns:1fr;} }
-
-  .vial-side{
-    display:flex; align-items:center; justify-content:center;
-    padding:36px 20px;
-    background:linear-gradient(180deg, rgba(0,0,0,0.15), transparent);
-    border-right:1px solid var(--line);
+  .vibe-card::before{
+    content:''; position:absolute; inset:-2px; border-radius:inherit; padding:1px;
+    background:linear-gradient(120deg, rgba(124,255,212,0.5), rgba(180,140,255,0.35), transparent 70%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
   }
-  @media (max-width: 720px){ .vial-side{border-right:none; border-bottom:1px solid var(--line);} }
+  .vibe-top{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  .vibe-greeting{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase;}
+  .vibe-emoji{font-size:34px; line-height:1; filter:drop-shadow(0 4px 14px rgba(124,255,212,0.3));}
+  .vibe-text{
+    font-family:var(--font-display); font-weight:700; font-size:22px; margin-top:10px; line-height:1.3;
+    letter-spacing:-0.01em;
+  }
+  .vibe-text.good{color:var(--mint);}
+  .vibe-text.bad{color:var(--coral);}
+  .vibe-text.loading{color:var(--text-dim); font-weight:600;}
+  .vibe-stats{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+  .vibe-stat{
+    background:rgba(0,0,0,0.18); border:1px solid var(--line); border-radius:12px;
+    padding:9px 13px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+    display:flex; align-items:center; gap:7px;
+  }
+  .vibe-stat b{color:var(--text); font-size:13px;}
 
-  .reading-side{padding:36px 32px; display:flex; flex-direction:column; justify-content:center; gap:18px;}
-  .reading-label{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;}
-  .reading-value{font-family:var(--font-display); font-size:56px; font-weight:700; line-height:1; letter-spacing:-0.02em; display:flex; align-items:baseline; gap:10px;}
-  .reading-value span.unit{font-family:var(--font-mono); font-size:20px; font-weight:500; color:var(--text-dim);}
-  .status-pill{display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:100px; font-family:var(--font-mono); font-size:12px; width:fit-content; letter-spacing:0.03em;}
-  .status-pill.clear{background:rgba(111,231,221,0.12); color:var(--clear); border:1px solid rgba(111,231,221,0.25);}
-  .status-pill.murky{background:rgba(226,105,75,0.14); color:var(--danger); border:1px solid rgba(226,105,75,0.3);}
-  .updated{font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
-
-  .grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
   @media (max-width: 720px){ .grid{grid-template-columns:1fr;} }
 
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:26px 28px; margin-bottom:20px;}
-  .card h2{font-family:var(--font-display); font-size:16px; font-weight:600; margin-bottom:4px;}
-  .card p.desc{font-size:13px; color:var(--text-dim); margin-bottom:18px; line-height:1.5;}
+  .card{
+    background:var(--glass); border:1px solid var(--line); border-radius:var(--r-lg);
+    padding:24px 24px; margin-bottom:18px; backdrop-filter:blur(14px);
+    position:relative; transition:border-color .2s, transform .2s;
+  }
+  .card:hover{border-color:var(--line-hi);}
+  .card h2{font-family:var(--font-display); font-size:16px; font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:8px;}
+  .card p.desc{font-size:13px; color:var(--text-dim); margin-bottom:18px; line-height:1.55;}
 
   .threshold-row{display:flex; gap:10px; align-items:stretch;}
   input[type=number], input[type=time]{
-    flex:1; background:var(--panel-2); border:1px solid var(--line); border-radius:10px;
+    flex:1; background:rgba(0,0,0,0.22); border:1px solid var(--line); border-radius:var(--r-sm);
     color:var(--text); font-family:var(--font-mono); font-size:16px; padding:12px 14px;
+    transition:border-color .15s, box-shadow .15s;
   }
-  input[type=number]:focus, input[type=time]:focus{outline:none; border-color:var(--clear);}
+  input[type=number]:focus, input[type=time]:focus{
+    outline:none; border-color:var(--mint); box-shadow:0 0 0 3px rgba(124,255,212,0.15);
+  }
   button{
-    font-family:var(--font-body); font-weight:600; font-size:13px; border:none; border-radius:10px;
-    padding:12px 18px; cursor:pointer; transition:transform .15s, opacity .15s;
+    font-family:var(--font-body); font-weight:700; font-size:13px; border:none; border-radius:var(--r-sm);
+    padding:12px 18px; cursor:pointer; transition:transform .15s, opacity .15s, box-shadow .15s;
   }
-  button:active{transform:scale(0.97);}
-  button:disabled{opacity:0.4; cursor:not-allowed; transform:none;}
-  .btn-primary{background:var(--clear); color:#062225;}
-  .btn-primary:hover{opacity:0.9;}
-  .btn-secondary{background:var(--panel-2); color:var(--text); border:1px solid var(--line);}
-  .btn-secondary:hover{opacity:0.85;}
+  button:active{transform:scale(0.96);}
+  button:disabled{opacity:0.35; cursor:not-allowed; transform:none;}
+  .btn-primary{
+    background:linear-gradient(120deg, var(--mint), var(--mint-deep)); color:#04211d;
+    box-shadow:0 6px 18px rgba(124,255,212,0.22);
+  }
+  .btn-primary:hover{opacity:0.92; box-shadow:0 8px 22px rgba(124,255,212,0.32);}
+  .btn-secondary{background:rgba(255,255,255,0.06); color:var(--text); border:1px solid var(--line);}
+  .btn-secondary:hover{opacity:0.9; border-color:var(--line-hi);}
   .threshold-current{margin-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);}
   .threshold-current b{color:var(--text); font-size:14px;}
 
   .servo-visual{display:flex; align-items:center; justify-content:center; gap:22px; margin-bottom:16px; flex-wrap:wrap;}
   .servo-state{text-align:center;}
   .servo-state .label{font-family:var(--font-mono); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em;}
-  .servo-state .value{font-family:var(--font-display); font-size:22px; font-weight:600; margin-top:4px;}
-  .log{margin-top:10px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); line-height:1.7; max-height:280px; overflow-y:auto;}
-  .log div{border-top:1px dashed var(--line); padding:6px 0;}
+  .servo-state .value{font-family:var(--font-display); font-size:22px; font-weight:700; margin-top:4px;}
+  .log{margin-top:10px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); line-height:1.8; max-height:320px; overflow-y:auto;}
+  .log::-webkit-scrollbar{width:5px;}
+  .log::-webkit-scrollbar-thumb{background:var(--line-hi); border-radius:10px;}
+  .log div{border-top:1px dashed var(--line); padding:7px 2px;}
   .log div:first-child{border-top:none;}
 
   .range-row{display:flex; gap:10px;}
@@ -130,71 +208,141 @@
 
   .chip-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
   .chip{
-    background:var(--panel-2); border:1px solid var(--line); border-radius:100px;
-    padding:6px 8px 6px 14px; font-family:var(--font-mono); font-size:12px;
+    background:rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:100px;
+    padding:7px 8px 7px 14px; font-family:var(--font-mono); font-size:12px;
     display:flex; align-items:center; gap:8px; color:var(--text);
   }
-  .chip.readonly{padding:6px 14px;}
+  .chip.readonly{padding:7px 14px;}
+  .chip::before{content:'🕒'; font-size:11px;}
   .chip button.chip-x{
-    background:rgba(226,105,75,0.15); color:var(--danger); border:none; border-radius:50%;
+    background:rgba(255,122,102,0.18); color:var(--coral); border:none; border-radius:50%;
     width:20px; height:20px; padding:0; font-size:13px; line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
   }
-  .chip-empty{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); margin-top:14px;}
+  .chip-empty{font-family:var(--font-mono); font-size:12px; color:var(--text-faint); margin-top:14px;}
 
-  .pump-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;}
+  .pump-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
   .pump-badge{
-    display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:12px;
-    font-family:var(--font-mono); font-size:13px; font-weight:600; border:1px solid var(--line);
-    background:var(--panel-2); color:var(--text-dim);
+    display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:100px;
+    font-family:var(--font-mono); font-size:13px; font-weight:700; border:1px solid var(--line);
+    background:rgba(255,255,255,0.04); color:var(--text-dim);
   }
-  .pump-badge.on{background:rgba(111,231,221,0.14); color:var(--clear); border-color:rgba(111,231,221,0.3);}
-  .pump-badge.warn{background:rgba(226,105,75,0.14); color:var(--danger); border-color:rgba(226,105,75,0.3);}
+  .pump-badge.on{background:rgba(124,255,212,0.14); color:var(--mint); border-color:rgba(124,255,212,0.32);}
+  .pump-badge.warn{background:rgba(255,122,102,0.14); color:var(--coral); border-color:rgba(255,122,102,0.32);}
   .pump-dot{width:7px; height:7px; border-radius:50%; background:currentColor;}
 
   .note-box{
-    background:rgba(232,163,61,0.08); border:1px solid rgba(232,163,61,0.25); border-radius:12px;
-    padding:14px 16px; font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:18px;
+    background:rgba(255,198,92,0.08); border:1px solid rgba(255,198,92,0.28); border-radius:var(--r-md);
+    padding:15px 17px; font-size:13px; color:var(--text-dim); line-height:1.65; margin-bottom:18px;
   }
-  .note-box b{color:var(--alert);}
+  .note-box b{color:var(--amber);}
 
   .warn-box{
-    background:rgba(226,105,75,0.1); border:1px solid rgba(226,105,75,0.3); border-radius:12px;
-    padding:14px 16px; font-size:13px; color:var(--danger); line-height:1.6; margin-bottom:16px;
+    background:rgba(255,122,102,0.1); border:1px solid rgba(255,122,102,0.32); border-radius:var(--r-md);
+    padding:15px 17px; font-size:13px; color:var(--coral); line-height:1.6; margin-bottom:16px;
     display:none;
   }
-  .warn-box.show{display:block;}
+  .warn-box.show{display:block; animation:fadeIn .25s ease;}
 
   .btn-row{display:flex; gap:10px;}
   .btn-row button{flex:1;}
 
-  footer{margin-top:36px; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
+  /* ---------- status pills ---------- */
+  .status-pill{display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:100px; font-family:var(--font-mono); font-size:12px; width:fit-content; letter-spacing:0.02em; font-weight:600;}
+  .status-pill.clear{background:rgba(124,255,212,0.12); color:var(--mint); border:1px solid rgba(124,255,212,0.28);}
+  .status-pill.murky{background:rgba(255,122,102,0.14); color:var(--coral); border:1px solid rgba(255,122,102,0.32);}
+  .updated{font-family:var(--font-mono); font-size:11px; color:var(--text-faint);}
+
+  /* ---------- turbidity hero ---------- */
+  .hero{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:0;
+    background:var(--glass); border:1px solid var(--line); border-radius:var(--r-lg);
+    overflow:hidden; margin-bottom:20px; backdrop-filter:blur(14px);
+  }
+  @media (max-width: 720px){ .hero{grid-template-columns:1fr;} }
+  .vial-side{
+    display:flex; align-items:center; justify-content:center; padding:36px 20px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.18), transparent);
+    border-right:1px solid var(--line);
+  }
+  @media (max-width: 720px){ .vial-side{border-right:none; border-bottom:1px solid var(--line);} }
+  .reading-side{padding:36px 32px; display:flex; flex-direction:column; justify-content:center; gap:16px;}
+  .reading-label{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;}
+  .reading-value{font-family:var(--font-display); font-size:52px; font-weight:800; line-height:1; letter-spacing:-0.02em; display:flex; align-items:baseline; gap:10px;}
+  .reading-value span.unit{font-family:var(--font-mono); font-size:18px; font-weight:600; color:var(--text-dim);}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:34px; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--text-faint);}
+  footer .tag{display:block; margin-top:6px; color:var(--text-dim); font-size:11.5px;}
+
+  /* ---------- bottom nav (mobile app-style) ---------- */
+  .bottom-nav{display:none;}
+  @media (max-width: 720px){
+    .navbar{display:none;}
+    .bottom-nav{
+      display:flex; position:fixed; left:0; right:0; bottom:0; z-index:10;
+      background:rgba(8,24,27,0.85); backdrop-filter:blur(18px);
+      border-top:1px solid var(--line); padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+      justify-content:space-between; gap:2px;
+    }
+    .bottom-nav .nav-btn{
+      flex:1 1 0; flex-direction:column; gap:3px; padding:8px 2px; border-radius:14px;
+      border:none; background:transparent; font-size:10.5px; text-align:center;
+    }
+    .bottom-nav .nav-btn .ic{font-size:18px;}
+    .bottom-nav .nav-btn.active{background:rgba(124,255,212,0.12); color:var(--mint); box-shadow:none;}
+    body{padding-bottom:96px;}
+  }
 </style>
 </head>
 <body>
+<div class="blob blob-a"></div>
+<div class="blob blob-b"></div>
+<div class="blob blob-c"></div>
+
 <div class="wrap">
 
   <header>
-    <div>
-      <div class="eyebrow">SMART FARM NS-WIT · ESP32-WROOM-32</div>
-      <h1>SMART FARM NS-WIT</h1>
+    <div class="brand">
+      <div class="brand-mark">🐸</div>
+      <div>
+        <div class="eyebrow">SMART FARM NS-WIT · ESP32-WROOM-32</div>
+        <h1>SMART FARM NS-WIT</h1>
+      </div>
     </div>
     <div class="conn"><span class="dot off" id="connDot"></span><span id="connText">กำลังเชื่อมต่อ Firebase…</span></div>
   </header>
 
   <nav class="navbar" id="navbar">
-    <button class="nav-btn active" data-page="home">หน้าหลัก</button>
-    <button class="nav-btn" data-page="feeding">ให้อาหาร</button>
-    <button class="nav-btn" data-page="water">น้ำ (เติม/ลด)</button>
-    <button class="nav-btn" data-page="turbidity">คุณภาพน้ำ (ขุ่น/pH)</button>
-    <button class="nav-btn" data-page="log">บันทึกเหตุการณ์</button>
+    <button class="nav-btn active" data-page="home"><span class="ic">🏠</span>หน้าหลัก</button>
+    <button class="nav-btn" data-page="feeding"><span class="ic">🍽️</span>ให้อาหาร</button>
+    <button class="nav-btn" data-page="water"><span class="ic">💧</span>น้ำ (เติม/ลด)</button>
+    <button class="nav-btn" data-page="turbidity"><span class="ic">🔬</span>คุณภาพน้ำ</button>
+    <button class="nav-btn" data-page="log"><span class="ic">📋</span>บันทึกเหตุการณ์</button>
   </nav>
 
   <!-- ==================== หน้าหลัก ==================== -->
   <section class="page active" id="page-home">
+
+    <div class="vibe-card">
+      <div class="vibe-top">
+        <div>
+          <div class="vibe-greeting">Vibe Check วันนี้</div>
+          <div class="vibe-text loading" id="vibeText">กำลังเช็กน้ำอยู่ รอแป๊บนึง...</div>
+        </div>
+        <div class="vibe-emoji" id="vibeEmoji">🌊</div>
+      </div>
+      <div class="vibe-stats">
+        <div class="vibe-stat">💧 ระดับน้ำ <b id="vibeWaterPercent">--%</b></div>
+        <div class="vibe-stat">🔬 ความขุ่น <b id="vibeTurbidity">--</b></div>
+        <div class="vibe-stat">🧪 pH <b id="vibePh">--</b></div>
+        <div class="vibe-stat">🍚 ให้อาหารล่าสุด <b id="vibeLastFed">--</b></div>
+      </div>
+    </div>
+
     <div class="grid">
       <div class="card">
-        <h2>ปริมาณน้ำ</h2>
+        <h2>💧 ปริมาณน้ำ</h2>
         <p class="desc">ระดับน้ำปัจจุบันเทียบกับปริมาณเป้าหมายที่ตั้งไว้ (100%)</p>
         <div class="servo-visual">
           <div class="servo-state">
@@ -206,18 +354,18 @@
             <div class="value" id="homeWaterPercent">--%</div>
           </div>
         </div>
-        <div style="background:var(--panel-2); border-radius:10px; height:14px; overflow:hidden;">
-          <div id="homeWaterBar" style="height:100%; width:0%; background:linear-gradient(90deg,#2E7C77,#6FE7DD); transition:width .4s;"></div>
+        <div style="background:rgba(0,0,0,0.22); border-radius:10px; height:14px; overflow:hidden;">
+          <div id="homeWaterBar" style="height:100%; width:0%; background:linear-gradient(90deg,var(--mint-deep),var(--mint)); transition:width .4s;"></div>
         </div>
       </div>
 
       <div class="card">
-        <h2>ค่าความขุ่นปัจจุบัน</h2>
-        <p class="desc">ค่า ADC ดิบจากเซนเซอร์วัดความขุ่น เทียบกับค่าที่ตั้งไว้</p>
+        <h2>🔬 ค่าความขุ่น</h2>
+        <p class="desc">ค่า ADC ความขุ่นล่าสุด เทียบกับค่าที่ตั้งไว้ (ต่ำกว่าค่าที่ตั้ง = ขุ่น)</p>
         <div class="servo-visual">
           <div class="servo-state">
-            <div class="label">ค่าความขุ่น</div>
-            <div class="value" id="homeTurbidityValue">-- ADC</div>
+            <div class="label">ค่า ADC</div>
+            <div class="value" id="homeTurbidityValue">--</div>
           </div>
           <div class="status-pill clear" id="homeTurbidityStatusPill">รอข้อมูล</div>
         </div>
@@ -225,7 +373,7 @@
       </div>
 
       <div class="card">
-        <h2>ค่าความเป็นกรด-ด่าง (pH)</h2>
+        <h2>🧪 ค่าความเป็นกรด-ด่าง (pH)</h2>
         <p class="desc">ค่า pH ปัจจุบันจากเซนเซอร์ เทียบกับช่วงที่ตั้งไว้</p>
         <div class="servo-visual">
           <div class="servo-state">
@@ -238,7 +386,7 @@
       </div>
 
       <div class="card">
-        <h2>เวลาที่ให้อาหารที่ตั้งไว้</h2>
+        <h2>🍽️ เวลาที่ให้อาหารที่ตั้งไว้</h2>
         <p class="desc">ตารางเวลาให้อาหารปัจจุบัน (แก้ไขได้ที่เมนู "ให้อาหาร")</p>
         <div class="chip-list" id="homeFeedTimeList"></div>
         <div class="chip-empty" id="homeFeedTimeEmpty" style="display:none;">ยังไม่มีตารางเวลาให้อาหาร</div>
@@ -246,7 +394,7 @@
       </div>
 
       <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
-        <h2>สถานะระบบโดยรวม</h2>
+        <h2>⚙️ สถานะระบบโดยรวม</h2>
         <p class="desc">ภาพรวมสถานะปั๊มน้ำและการเปลี่ยนน้ำ ณ ตอนนี้</p>
         <div class="servo-visual" style="justify-content:flex-start; gap:24px;">
           <div class="servo-state">
@@ -266,7 +414,7 @@
     </div>
 
     <div class="card">
-      <h2>ประวัติค่าความขุ่นย้อนหลัง</h2>
+      <h2>📈 ประวัติค่าความขุ่นย้อนหลัง</h2>
       <p class="desc">ค่า ADC ที่บันทึกล่าสุด 30 จุด — เส้นยิ่งต่ำ ยิ่งขุ่น เส้นประคือระดับที่ตั้งไว้</p>
       <canvas id="historyChart" width="900" height="220" style="width:100%; height:220px; display:block;"></canvas>
     </div>
@@ -275,7 +423,7 @@
   <!-- ==================== ให้อาหาร ==================== -->
   <section class="page" id="page-feeding">
     <div class="card">
-      <h2>ระยะเวลาให้อาหารต่อครั้ง</h2>
+      <h2>⏱️ ระยะเวลาให้อาหารต่อครั้ง</h2>
       <p class="desc">ทุกเวลาในตารางด้านล่างจะให้อาหารนาน "เท่ากับค่านี้" เสมอ — ตั้งค่าตรงนี้ก่อนแล้วค่อยเพิ่มเวลา เพื่อให้แน่ใจว่าระบบใช้ระยะเวลาที่ต้องการจริง</p>
       <div class="threshold-row">
         <input type="number" id="feedDurationInput" placeholder="เช่น 3 (วินาที)" step="1" min="1">
@@ -285,7 +433,7 @@
     </div>
 
     <div class="card">
-      <h2>ตารางเวลาให้อาหาร</h2>
+      <h2>🗓️ ตารางเวลาให้อาหาร</h2>
       <p class="desc">ถึงเวลาที่ตั้งไว้ เซอร์โวจะหมุน 90° (ให้อาหาร) ค้างไว้ตามระยะเวลาด้านบน แล้วหมุนกลับ 0° (ไม่ให้) — เซอร์โวในระบบนี้ใช้เฉพาะให้อาหารเท่านั้น</p>
       <div class="threshold-row">
         <input type="time" id="feedTimeInput">
@@ -296,7 +444,7 @@
     </div>
 
     <div class="card">
-      <h2>ให้อาหารทันที / สถานะเซอร์โว</h2>
+      <h2>🍚 ให้อาหารทันที / สถานะเซอร์โว</h2>
       <button class="btn-primary" id="btnFeedNow" style="width:100%;">ให้อาหารทันที</button>
       <div class="servo-visual" style="margin-top:20px;">
         <div class="servo-state">
@@ -321,7 +469,7 @@
     <div class="warn-box" id="qualityDrainWarn">⚠️ กำลังระบายน้ำเพื่อเปลี่ยนน้ำอยู่ (น้ำขุ่น/pH ผิดปกติ) — ปุ่มเติมน้ำเองจะใช้ไม่ได้จนกว่าน้ำจะเหลือต่ำกว่า 10%</div>
 
     <div class="card">
-      <h2>ระดับน้ำปัจจุบัน</h2>
+      <h2>💧 ระดับน้ำปัจจุบัน</h2>
       <div class="servo-visual">
         <div class="servo-state">
           <div class="label">ระดับน้ำ</div>
@@ -332,13 +480,13 @@
           <div class="value" id="waterLevelPercent">--%</div>
         </div>
       </div>
-      <div style="background:var(--panel-2); border-radius:10px; height:14px; overflow:hidden;">
-        <div id="waterLevelBar" style="height:100%; width:0%; background:linear-gradient(90deg,#2E7C77,#6FE7DD); transition:width .4s;"></div>
+      <div style="background:rgba(0,0,0,0.22); border-radius:10px; height:14px; overflow:hidden;">
+        <div id="waterLevelBar" style="height:100%; width:0%; background:linear-gradient(90deg,var(--mint-deep),var(--mint)); transition:width .4s;"></div>
       </div>
     </div>
 
     <div class="card">
-      <h2>ปริมาณน้ำเป้าหมาย และความสูงถัง</h2>
+      <h2>🎯 ปริมาณน้ำเป้าหมาย และความสูงถัง</h2>
       <p class="desc">ปริมาณน้ำที่ต้องการ (ซม.) จะถือเป็น 100% — ความสูงถังใช้คำนวณระยะจากเซนเซอร์ให้ตรงกับถังจริง</p>
       <div class="threshold-row">
         <input type="number" id="targetLevelInput" placeholder="เช่น 25 (ซม. = 100%)" step="0.5" min="1">
@@ -354,7 +502,7 @@
     </div>
 
     <div class="card">
-      <h2>สถานะปั๊มน้ำ / ควบคุมด้วยตนเอง</h2>
+      <h2>🔧 สถานะปั๊มน้ำ / ควบคุมด้วยตนเอง</h2>
       <div class="pump-row">
         <span class="pump-badge" id="pumpInBadge"><span class="pump-dot"></span>ปั๊มเติมน้ำ: <span id="pumpInText">OFF</span></span>
         <span class="pump-badge" id="pumpOutBadge"><span class="pump-dot"></span>ปั๊มระบายน้ำ: <span id="pumpOutText">OFF</span></span>
@@ -378,8 +526,8 @@
               <feDisplacementMap in="SourceGraphic" in2="noise" scale="6"/>
             </filter>
             <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop id="gradTop" offset="0%" stop-color="#6FE7DD"/>
-              <stop id="gradBottom" offset="100%" stop-color="#2E7C77"/>
+              <stop id="gradTop" offset="0%" stop-color="#7CFFD4"/>
+              <stop id="gradBottom" offset="100%" stop-color="#22C7A9"/>
             </linearGradient>
             <clipPath id="jarClip">
               <path d="M55 20 H125 V40 Q150 45 150 90 V225 Q150 250 120 250 H60 Q30 250 30 225 V90 Q30 45 55 40 Z"/>
@@ -402,7 +550,7 @@
     </div>
 
     <div class="card">
-      <h2>สถานะการเปลี่ยนน้ำ</h2>
+      <h2>🔄 สถานะการเปลี่ยนน้ำ</h2>
       <p class="desc">เมื่อน้ำขุ่นเกินเกณฑ์ หรือค่า pH ผิดช่วง ระบบจะสั่งปั๊มระบายน้ำโดยอัตโนมัติ (ดูปั๊มที่เมนู "น้ำ (เติม/ลด)")</p>
       <div class="servo-visual">
         <div class="servo-state">
@@ -413,7 +561,7 @@
     </div>
 
     <div class="card">
-      <h2>ตั้งค่าระดับความขุ่น</h2>
+      <h2>🎚️ ตั้งค่าระดับความขุ่น</h2>
       <p class="desc">กำหนดค่า ADC ดิบ (0-4095) — เมื่อค่าที่วัดได้ต่ำกว่าค่านี้ ถือว่าน้ำขุ่นเกินเกณฑ์</p>
       <div class="threshold-row">
         <input type="number" id="thresholdInput" placeholder="เช่น 200" step="1">
@@ -423,7 +571,7 @@
     </div>
 
     <div class="card">
-      <h2>ตั้งค่าช่วงค่า pH ที่เหมาะสม</h2>
+      <h2>⚗️ ตั้งค่าช่วงค่า pH ที่เหมาะสม</h2>
       <div class="range-row">
         <input type="number" id="phMinInput" placeholder="ต่ำสุด เช่น 6.5" step="0.1">
         <input type="number" id="phMaxInput" placeholder="สูงสุด เช่น 8.5" step="0.1">
@@ -438,14 +586,25 @@
   <!-- ==================== บันทึกเหตุการณ์ ==================== -->
   <section class="page" id="page-log">
     <div class="card">
-      <h2>บันทึกเหตุการณ์ทั้งหมด</h2>
+      <h2>📋 บันทึกเหตุการณ์ทั้งหมด</h2>
       <p class="desc">ประวัติการทำงานของทุกระบบ เรียงจากล่าสุดไปเก่าสุด</p>
       <div class="log" id="eventLog"><div>ยังไม่มีเหตุการณ์</div></div>
     </div>
   </section>
 
-  <footer>project-ns-ffe60 · Firebase Realtime Database · asia-southeast1</footer>
+  <footer>
+    project-ns-ffe60 · Firebase Realtime Database · asia-southeast1
+    <span class="tag">made with 💚 for the frogs</span>
+  </footer>
 </div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-btn active" data-page="home"><span class="ic">🏠</span>หลัก</button>
+  <button class="nav-btn" data-page="feeding"><span class="ic">🍽️</span>อาหาร</button>
+  <button class="nav-btn" data-page="water"><span class="ic">💧</span>น้ำ</button>
+  <button class="nav-btn" data-page="turbidity"><span class="ic">🔬</span>คุณภาพ</button>
+  <button class="nav-btn" data-page="log"><span class="ic">📋</span>บันทึก</button>
+</nav>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -603,6 +762,31 @@
   let latestPhMax = null;
   let qualityDrainNow = false;
 
+  // ---- Vibe check (หน้าหลัก) ----
+  let turbidityOK = null; // true = น้ำใส, false = น้ำขุ่น, null = ยังไม่มีข้อมูล
+  let phOK = null;        // true = pH อยู่ในช่วง, false = ผิดช่วง, null = ยังไม่มีข้อมูล
+
+  function updateVibe(){
+    const vibeEl = document.getElementById('vibeText');
+    const emojiEl = document.getElementById('vibeEmoji');
+    if(!vibeEl || !emojiEl) return;
+    if(turbidityOK === null || phOK === null){
+      vibeEl.textContent = 'กำลังเช็กน้ำอยู่ รอแป๊บนึง...';
+      vibeEl.className = 'vibe-text loading';
+      emojiEl.textContent = '🌊';
+      return;
+    }
+    if(turbidityOK && phOK){
+      vibeEl.textContent = 'น้ำใสปิ๊ง ค่าทุกอย่างเป๊ะ กบแฮปปี้ 🐸✨';
+      vibeEl.className = 'vibe-text good';
+      emojiEl.textContent = '✅';
+    } else {
+      vibeEl.textContent = 'น้ำมีปัญหา ระบบกำลังจัดการให้อัตโนมัติ รอสักครู่นะ 🚨';
+      vibeEl.className = 'vibe-text bad';
+      emojiEl.textContent = '⚠️';
+    }
+  }
+
   function getScheduleArray(str){
     if(!str) return [];
     return str.split(',').map(s => s.trim()).filter(s => s.length > 0);
@@ -618,25 +802,34 @@
 
   function startListeners() {
 
-  refTurbidity.on('value', snap => {
-    const val = snap.val();
-    document.getElementById('turbidityValue').textContent = (val === null) ? '--' : val;
-    document.getElementById('homeTurbidityValue').textContent = (val === null) ? '-- ADC' : val + ' ADC';
+  let latestTurbidityVal = null;
+
+  function renderTurbidityStatus(){
     const pill = document.getElementById('statusPill');
     const homePill = document.getElementById('homeTurbidityStatusPill');
-    if(val !== null && latestThreshold !== null){
-      if(val < latestThreshold){
-        pill.textContent = 'น้ำขุ่น — ต่ำกว่าค่าที่ตั้งไว้';
-        pill.className = 'status-pill murky';
-        homePill.textContent = 'น้ำขุ่น';
-        homePill.className = 'status-pill murky';
-      } else {
-        pill.textContent = 'น้ำใส — อยู่ในเกณฑ์ปกติ';
-        pill.className = 'status-pill clear';
-        homePill.textContent = 'น้ำใส — ปกติ';
-        homePill.className = 'status-pill clear';
-      }
+    if(latestTurbidityVal === null || latestThreshold === null){
+      turbidityOK = null;
+      return;
     }
+    const isMurky = latestTurbidityVal < latestThreshold;
+    const text = isMurky ? '🟠 น้ำขุ่น — ต่ำกว่าค่าที่ตั้งไว้' : '🟢 น้ำใส — อยู่ในเกณฑ์ปกติ';
+    const cls = 'status-pill ' + (isMurky ? 'murky' : 'clear');
+    pill.textContent = text;
+    pill.className = cls;
+    homePill.textContent = text;
+    homePill.className = cls;
+    turbidityOK = !isMurky;
+    updateVibe();
+  }
+
+  refTurbidity.on('value', snap => {
+    const val = snap.val();
+    latestTurbidityVal = val;
+    const text = (val === null) ? '--' : val;
+    document.getElementById('turbidityValue').textContent = text;
+    document.getElementById('homeTurbidityValue').textContent = text;
+    document.getElementById('vibeTurbidity').textContent = text;
+    renderTurbidityStatus();
     setWaterVisual(val ?? 0, latestThreshold);
   });
 
@@ -652,8 +845,9 @@
     const t = snap.val();
     latestThreshold = t;
     document.getElementById('currentThreshold').textContent = (t === null) ? '--' : t;
-    document.getElementById('homeTurbidityThreshold').textContent = (t === null) ? '--' : t;
     document.getElementById('thresholdInput').placeholder = (t === null) ? 'เช่น 200' : t;
+    document.getElementById('homeTurbidityThreshold').textContent = (t === null) ? '--' : t;
+    renderTurbidityStatus();
     if(lastHistoryPoints.length) drawHistoryChart(lastHistoryPoints, latestThreshold);
   });
 
@@ -676,21 +870,33 @@
   });
 
   // ---- ระดับน้ำ ----
+  // คำนวณ % เองฝั่งเว็บจาก (ระดับน้ำ cm / ปริมาณน้ำเป้าหมาย cm) * 100 ด้วยสูตรเดียวกับที่บอร์ดพิมพ์ลง Serial Monitor
+  // เพื่อให้ตัวเลขตรงกันเป๊ะเสมอ ไม่ว่าเฟิร์มแวร์เวอร์ชันที่รันอยู่จะตัดค่าที่ 100% ก่อนส่งขึ้น Firebase หรือไม่ก็ตาม
+  let latestWaterLevelCm = null;
+  let latestTargetLevelCm = null;
+
+  function updateWaterPercentDisplay(){
+    if(latestWaterLevelCm === null || latestTargetLevelCm === null || latestTargetLevelCm <= 0) return;
+    const p = (latestWaterLevelCm / latestTargetLevelCm) * 100;
+    const text = Math.round(p) + '%';
+    const width = Math.min(100, Math.max(0, p)) + '%'; // แท่งกราฟยังเต็มที่ 100% เสมอ ไม่ล้นจอ แม้ตัวเลขจะเกิน 100%
+    document.getElementById('waterLevelPercent').textContent = text;
+    document.getElementById('waterLevelBar').style.width = width;
+    document.getElementById('homeWaterPercent').textContent = text;
+    document.getElementById('homeWaterBar').style.width = width;
+    document.getElementById('vibeWaterPercent').textContent = text;
+  }
+
   refWaterLevelCm.on('value', snap => {
     const v = snap.val();
     const text = (v === null) ? '-- cm' : v.toFixed(1) + ' cm';
     document.getElementById('waterLevelCm').textContent = text;
     document.getElementById('homeWaterCm').textContent = text;
+    latestWaterLevelCm = v;
+    updateWaterPercentDisplay();
   });
-  refWaterLevelPercent.on('value', snap => {
-    const p = snap.val();
-    const text = (p === null) ? '--%' : Math.round(p) + '%';
-    const width = (p === null ? 0 : Math.min(100, Math.max(0, p))) + '%';
-    document.getElementById('waterLevelPercent').textContent = text;
-    document.getElementById('waterLevelBar').style.width = width;
-    document.getElementById('homeWaterPercent').textContent = text;
-    document.getElementById('homeWaterBar').style.width = width;
-  });
+  // เก็บ ref ไว้เผื่ออนาคต แต่ไม่ใช้ค่านี้ตัดสินการแสดงผล % แล้ว (ดูเหตุผลด้านบน)
+  refWaterLevelPercent.on('value', () => {});
 
   refTankHeight.on('value', snap => {
     const h = snap.val();
@@ -718,15 +924,19 @@
     }
     const val = parseFloat(raw);
     if(val < latestPhMin){
-      pill.textContent = 'pH ต่ำเกินไป (เป็นกรด)';
+      pill.textContent = '🟠 pH ต่ำเกินไป (เป็นกรด)';
       pill.className = 'status-pill murky';
+      phOK = false;
     } else if(val > latestPhMax){
-      pill.textContent = 'pH สูงเกินไป (เป็นด่าง)';
+      pill.textContent = '🟠 pH สูงเกินไป (เป็นด่าง)';
       pill.className = 'status-pill murky';
+      phOK = false;
     } else {
-      pill.textContent = 'อยู่ในเกณฑ์ปกติ';
+      pill.textContent = '🟢 อยู่ในเกณฑ์ปกติ';
       pill.className = 'status-pill clear';
+      phOK = true;
     }
+    updateVibe();
   }
 
   refPh.on('value', snap => {
@@ -734,6 +944,7 @@
     const el = document.getElementById('homePhValue');
     el.textContent = (v === null) ? '--' : v.toFixed(2);
     el.dataset.raw = (v === null) ? 'null' : v;
+    document.getElementById('vibePh').textContent = (v === null) ? '--' : v.toFixed(2);
     updatePhStatusPill();
   });
 
@@ -775,6 +986,8 @@
     const t = snap.val();
     document.getElementById('currentTargetLevel').textContent = (t === null) ? '--' : t;
     document.getElementById('targetLevelInput').placeholder = (t === null) ? 'เช่น 25 (ซม. = 100%)' : t;
+    latestTargetLevelCm = t;
+    updateWaterPercentDisplay();
   });
 
   document.getElementById('saveTargetLevel').addEventListener('click', () => {
@@ -873,8 +1086,11 @@
     });
   });
 
+  let latestSavedFeedDuration = null;
+
   refFeedDuration.on('value', snap => {
     const d = snap.val();
+    latestSavedFeedDuration = d;
     document.getElementById('currentFeedDuration').textContent = (d === null) ? '--' : d;
     const input = document.getElementById('feedDurationInput');
     if(document.activeElement !== input && d !== null){
@@ -883,14 +1099,37 @@
     input.placeholder = (d === null) ? 'เช่น 3 (วินาที)' : d;
   });
 
+  function flashDurationSaved(){
+    const btn = document.getElementById('saveFeedDuration');
+    const original = btn.textContent;
+    btn.textContent = 'บันทึกแล้ว ✓';
+    setTimeout(() => { btn.textContent = original; }, 1200);
+  }
+
   document.getElementById('saveFeedDuration').addEventListener('click', () => {
     const input = document.getElementById('feedDurationInput');
     const v = parseInt(input.value, 10);
     if(isNaN(v) || v <= 0){ input.focus(); return; }
     refFeedDuration.set(v);
+    flashDurationSaved();
+  });
+
+  document.getElementById('feedDurationInput').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      document.getElementById('saveFeedDuration').click();
+    }
   });
 
   document.getElementById('btnFeedNow').addEventListener('click', () => {
+    // ถ้าพิมพ์จำนวนวินาทีใหม่ไว้แต่ยังไม่ได้กด "บันทึกระยะเวลา" ให้บันทึกอัตโนมัติก่อนสั่งให้อาหารทันที
+    // กันปัญหาเซอร์โวหมุนกลับเร็วเกินเพราะบอร์ดยังใช้ค่าวินาทีเก่าที่บันทึกไว้ล่าสุดอยู่ ไม่ใช่ค่าที่เพิ่งพิมพ์
+    const input = document.getElementById('feedDurationInput');
+    const v = parseInt(input.value, 10);
+    if(!isNaN(v) && v > 0 && v !== latestSavedFeedDuration){
+      refFeedDuration.set(v);
+      flashDurationSaved();
+    }
     refFeedManualTs.set(Date.now());
   });
 
@@ -903,6 +1142,7 @@
     const text = t ? new Date(t).toLocaleString('th-TH') : '--';
     document.getElementById('lastFedAt').textContent = text;
     document.getElementById('homeLastFedAt').textContent = text;
+    document.getElementById('vibeLastFed').textContent = text;
   });
 
   refLog.limitToLast(30).on('value', snap => {
