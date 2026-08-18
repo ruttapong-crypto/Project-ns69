@@ -190,6 +190,23 @@
   .btn-primary:hover{opacity:0.92; box-shadow:0 8px 22px rgba(124,255,212,0.32);}
   .btn-secondary{background:rgba(255,255,255,0.06); color:var(--text); border:1px solid var(--line);}
   .btn-secondary:hover{opacity:0.9; border-color:var(--line-hi);}
+  .btn-danger{background:rgba(255,122,102,0.14); color:var(--coral); border:1px solid rgba(255,122,102,0.4);}
+  .btn-danger:hover{background:rgba(255,122,102,0.22);}
+  .mode-toggle{display:flex; gap:8px; margin-bottom:14px;}
+  .mode-btn{
+    flex:1; padding:13px; border-radius:12px; border:1px solid var(--line); background:var(--glass);
+    color:var(--text-dim); font-family:var(--font-body); font-weight:700; font-size:13px; cursor:pointer;
+    transition:all .18s;
+  }
+  .mode-btn:hover{border-color:var(--line-hi); color:var(--text);}
+  .mode-btn.active[data-mode="auto"]{
+    background:linear-gradient(120deg, var(--mint), var(--mint-deep)); color:#04211d; border-color:transparent;
+    box-shadow:0 6px 18px rgba(124,255,212,0.22);
+  }
+  .mode-btn.active[data-mode="manual"]{
+    background:linear-gradient(120deg, var(--amber), #e0a83f); color:#2b1c00; border-color:transparent;
+    box-shadow:0 6px 18px rgba(255,198,92,0.25);
+  }
   .threshold-current{margin-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);}
   .threshold-current b{color:var(--text); font-size:14px;}
 
@@ -398,11 +415,11 @@
         <p class="desc">ภาพรวมสถานะปั๊มน้ำและการเปลี่ยนน้ำ ณ ตอนนี้</p>
         <div class="servo-visual" style="justify-content:flex-start; gap:24px;">
           <div class="servo-state">
-            <div class="label">ปั๊มเติมน้ำ</div>
+            <div class="label">ปั๊ม 1 (ดูดน้ำเข้า)</div>
             <div class="value" id="homePumpIn" style="font-size:16px;">OFF</div>
           </div>
           <div class="servo-state">
-            <div class="label">ปั๊มระบายน้ำ</div>
+            <div class="label">ปั๊ม 2 (ปล่อยน้ำออก)</div>
             <div class="value" id="homePumpOut" style="font-size:16px;">OFF</div>
           </div>
           <div class="servo-state">
@@ -503,15 +520,24 @@
 
     <div class="card">
       <h2>🔧 สถานะปั๊มน้ำ / ควบคุมด้วยตนเอง</h2>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="modeAutoBtn" data-mode="auto">⚙️ โหมดอัตโนมัติ</button>
+        <button class="mode-btn" id="modeManualBtn" data-mode="manual">🕹️ โหมดควบคุมเอง</button>
+      </div>
+      <div class="threshold-current" id="modeHint" style="margin-bottom:16px;">⚙️ ระบบควบคุมปั๊มเองตามระดับน้ำ (95-105%) และคุณภาพน้ำ</div>
       <div class="pump-row">
-        <span class="pump-badge" id="pumpInBadge"><span class="pump-dot"></span>ปั๊มเติมน้ำ: <span id="pumpInText">OFF</span></span>
-        <span class="pump-badge" id="pumpOutBadge"><span class="pump-dot"></span>ปั๊มระบายน้ำ: <span id="pumpOutText">OFF</span></span>
+        <span class="pump-badge" id="pumpInBadge"><span class="pump-dot"></span>ปั๊ม 1 (ดูดน้ำเข้า): <span id="pumpInText">OFF</span></span>
+        <span class="pump-badge" id="pumpOutBadge"><span class="pump-dot"></span>ปั๊ม 2 (ปล่อยน้ำออก): <span id="pumpOutText">OFF</span></span>
       </div>
       <div class="btn-row">
-        <button class="btn-primary" id="btnManualFill">เติมน้ำเอง</button>
-        <button class="btn-secondary" id="btnManualDrain">ระบายน้ำเอง</button>
+        <button class="btn-primary" id="btnManualFill">เติมน้ำเอง (ปั๊ม 1)</button>
+        <button class="btn-secondary" id="btnManualDrain">ระบายน้ำเอง (ปั๊ม 2)</button>
       </div>
-      <div class="threshold-current" id="manualHint">กดเติม/ระบายน้ำเองได้ ยกเว้นตอนที่ปั๊มอีกฝั่งกำลังทำงานอยู่ หรือกำลังระบายน้ำเพื่อเปลี่ยนน้ำอยู่</div>
+      <div class="btn-row" style="margin-top:10px;">
+        <button class="btn-danger" id="btnStopFill" disabled>⏹ หยุดปั๊ม 1 (หยุดเติม)</button>
+        <button class="btn-danger" id="btnStopDrain" disabled>⏹ หยุดปั๊ม 2 (หยุดปล่อย)</button>
+      </div>
+      <div class="threshold-current" id="manualHint">กดเติม/ระบายน้ำเองได้ ยกเว้นตอนที่ปั๊มอีกฝั่งกำลังทำงานอยู่ หรือกำลังระบายน้ำเพื่อเปลี่ยนน้ำอยู่ — ปุ่ม "หยุด" บังคับปิดปั๊มที่กำลังทำงานได้ทันที ไม่ว่าจะถึงเป้าหมายหรือยัง (ในโหมดควบคุมเอง ปั๊มจะไม่หยุดที่ 100% ให้เอง ต้องกดหยุดเสมอ)</div>
     </div>
   </section>
 
@@ -666,6 +692,9 @@
   const refQualityDrainActive = db.ref('control/water/qualityDrainActive');
   const refManualFillTs = db.ref('control/water/manualFillTs');
   const refManualDrainTs = db.ref('control/water/manualDrainTs');
+  const refManualStopFillTs = db.ref('control/water/manualStopFillTs');
+  const refManualStopDrainTs = db.ref('control/water/manualStopDrainTs');
+  const refManualMode = db.ref('control/water/manualModeOn');
 
   const connDot = document.getElementById('connDot');
   const connText = document.getElementById('connText');
@@ -1004,12 +1033,14 @@
     document.getElementById('pumpInText').textContent = on ? 'ON' : 'OFF';
     document.getElementById('pumpInBadge').className = 'pump-badge' + (on ? ' on' : '');
     document.getElementById('homePumpIn').textContent = on ? 'ON' : 'OFF';
+    document.getElementById('btnStopFill').disabled = !on;
   });
   refPumpOutState.on('value', snap => {
     const on = snap.val() === 'ON';
     document.getElementById('pumpOutText').textContent = on ? 'ON' : 'OFF';
     document.getElementById('pumpOutBadge').className = 'pump-badge' + (on ? (qualityDrainNow ? ' warn' : ' on') : '');
     document.getElementById('homePumpOut').textContent = on ? 'ON' : 'OFF';
+    document.getElementById('btnStopDrain').disabled = !on;
   });
   refQualityDrainActive.on('value', snap => {
     qualityDrainNow = snap.val() === true;
@@ -1025,6 +1056,31 @@
   });
   document.getElementById('btnManualDrain').addEventListener('click', () => {
     refManualDrainTs.set(Date.now());
+  });
+  document.getElementById('btnStopFill').addEventListener('click', () => {
+    refManualStopFillTs.set(Date.now());
+  });
+  document.getElementById('btnStopDrain').addEventListener('click', () => {
+    refManualStopDrainTs.set(Date.now());
+  });
+
+  // ---- โหมดควบคุมเอง / อัตโนมัติ ----
+  refManualMode.on('value', snap => {
+    const manual = snap.val() === true;
+    const autoBtn = document.getElementById('modeAutoBtn');
+    const manualBtn = document.getElementById('modeManualBtn');
+    const hint = document.getElementById('modeHint');
+    autoBtn.classList.toggle('active', !manual);
+    manualBtn.classList.toggle('active', manual);
+    hint.textContent = manual
+      ? '🕹️ โหมดควบคุมเอง: ระบบอัตโนมัติหยุดทำงานชั่วคราว ปั๊มทำงานตามที่กดเท่านั้น ต้องกดปุ่ม "หยุด" เพื่อปิดเอง'
+      : '⚙️ ระบบควบคุมปั๊มเองตามระดับน้ำ (95-105%) และคุณภาพน้ำ';
+  });
+  document.getElementById('modeAutoBtn').addEventListener('click', () => {
+    refManualMode.set(false);
+  });
+  document.getElementById('modeManualBtn').addEventListener('click', () => {
+    refManualMode.set(true);
   });
 
   // ---- ให้อาหารอัตโนมัติ ----
